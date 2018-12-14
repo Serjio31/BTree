@@ -3,6 +3,9 @@ class BTree(val t: Int) {
     var keysCount: Int = 0
         private set
 
+    var nodesCount: Int = 0
+        private set
+
     var isLeaf: Boolean = true
         private set
 
