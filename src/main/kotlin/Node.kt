@@ -44,7 +44,11 @@ class Node(
                 x.nodes[j + 1] = x.nodes[j]
             }
         }
-        x.nodes[i + 1] = z
+        if (i + 1 > x.keysCount) {
+            x.nodes.add(z)
+        } else {
+            x.nodes[i + 1] = z
+        }
         for (j in x.keysCount - 1 downTo i) {
             if (j + 1 >= x.keysCount) {
                 x.keys.add(x.keys[j])
@@ -52,7 +56,11 @@ class Node(
                 x.keys[j + 1] = x.keys[j]
             }
         }
-        x.keys[i] = this.keys[t - 1]
+        if (i == 0) {
+            x.keys.add(this.keys[t - 1])
+        } else {
+            x.keys[i] = this.keys[t - 1]
+        }
         this.keys.removeAt(t - 1)
         x.keysCount++
     }
