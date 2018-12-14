@@ -57,6 +57,34 @@ class Node(
         x.keysCount++
     }
 
+    fun insertNonFull(k: Int, t: Int) {
+        var i = this.keysCount - 1
+        if (this.isLeaf) {
+            while (i >= 0 && k < this.keys[i]) {
+                if (i + 1 >= this.keysCount) {
+                    this.keys.add(this.keys[i])
+                } else {
+                    this.keys[i + 1] = this.keys[i]
+                }
+                i--
+            }
+            this.keys[i + 1] = k
+            this.keysCount++
+        } else {
+            while (i >= 0 && k < this.keys[i]) {
+                i--
+            }
+            i++
+            if (this.nodes[i].keysCount == 2 * t - 1) {
+                this.nodes[i].splitChild(this, i, t)
+                if (k > this.keys[i]) {
+                    i++
+                }
+            }
+            this.nodes[i].insertNonFull(k, t)
+        }
+    }
+
     override fun equals(other: Any?): Boolean {
         if (this === other) return true
         if (javaClass != other?.javaClass) return false
