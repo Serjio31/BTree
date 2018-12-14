@@ -9,16 +9,16 @@ class BTree(
 
     fun search(key: Int): Pair<BTree, Int>? {
         var i = 0
-        while (i <= keysCount && key > keys[i]) {
+        while (i < keysCount && key > keys[i]) {
             i++
         }
-        if (i <= keysCount && key == keys[i]) {
+        if (i < keysCount && key == keys[i]) {
             return Pair(this, i)
         }
-        if (isLeaf) {
-            return  null
+        return if (isLeaf) {
+            null
         } else {
-            return nodes[i].search(key)
+            nodes[i].search(key)
         }
     }
 
