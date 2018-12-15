@@ -93,6 +93,36 @@ class Node(
         }
     }
 
+    fun deleteKey(k: Int, t: Int) {
+        val index = this.keys.indexOfFirst { x -> k == x }
+        if (index != -1 && this.isLeaf) {
+            this.keys.removeAt(index)
+            this.keysCount--
+        } else if (index != -1 && !this.isLeaf) {
+            when {
+                this.nodes[index].keysCount >= t -> {
+                    val key = this.nodes[index].keys.last()
+                    this.nodes[index].deleteKey(key, t)
+                    this.keys[index] = key
+                }
+                this.nodes[index + 1].keysCount >= t -> {
+                    val key = this.nodes[index+ 1].keys.first()
+                    this.nodes[index + 1].deleteKey(key, t)
+                    this.keys[index] = key
+                }
+                else -> {
+                    this.nodes[index].keys.add(k)
+                    for (j in 0 until this.nodes[index + 1].keysCount) {
+                        this.nodes[index].keys.add(this.nodes[index + 1].keys[j])
+                    }
+                    this.keys.removeAt(index)
+                    this.nodes.removeAt(index + 1)
+                    this.nodes[index].deleteKey(k, t)
+                }
+            }
+        }
+    }
+
     override fun equals(other: Any?): Boolean {
         if (this === other) return true
         if (javaClass != other?.javaClass) return false

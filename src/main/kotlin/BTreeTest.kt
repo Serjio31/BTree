@@ -92,11 +92,23 @@ class BTreeTest {
             1, arrayListOf(7),
             false, arrayListOf(exampleFirstNode, exampleSecondNode)
         )
-
         val tree = BTree(4, Node(7, arrayListOf(1,3,5,7,9,11,13)))
-
         tree.insert(10)
+        assertTrue(tree.root == exampleRoot)
+    }
 
+    @Test
+    fun deleteFromTree() {
+        val exampleFirstNode = Node(3, arrayListOf(1, 3, 5))
+        val exampleSecondNode = Node(3, arrayListOf(10,11,13))
+
+        val exampleRoot = Node(
+            1, arrayListOf(9),
+            false, arrayListOf(exampleFirstNode, exampleSecondNode)
+        )
+        val tree = BTree(4, Node(1, arrayListOf(7),
+            false, arrayListOf(exampleFirstNode, Node(4, arrayListOf(9, 10,11,13))) ))
+        tree.delete(7)
         assertTrue(tree.root == exampleRoot)
     }
 

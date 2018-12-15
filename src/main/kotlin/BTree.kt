@@ -19,4 +19,14 @@ class BTree(
             root.insertNonFull(k, this.t)
         }
     }
+
+    fun delete(key: Int): Boolean {
+        val p = root.search(key)
+        return if (p != null) {
+            p.first.deleteKey(key, t)
+            true
+        } else {
+            false
+        }
+    }
 }
